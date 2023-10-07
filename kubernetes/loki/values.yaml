@@ -1,0 +1,25 @@
+# loki:
+#   storage:
+#     s3:
+#       s3: null
+#       endpoint: http://192.168.1.41:9000
+#       region: null
+#       secretAccessKey: bfSbOaw66NOvsK14XbLf4mlGqW2VJ61k1fzmaZ0I
+#       accessKeyId: 3SLpRpaQli8K0GzAxObf
+#       s3ForcePathStyle: false
+#       insecure: false
+
+loki:
+  commonConfig:
+    replication_factor: 3
+  storage:
+    type: 's3'
+    s3:
+      endpoint: http://192.168.1.41:9000
+      bucketnames: disk1
+      secret_access_key: bfSbOaw66NOvsK14XbLf4mlGqW2VJ61k1fzmaZ0I
+      access_key_id: 3SLpRpaQli8K0GzAxObf
+singleBinary:
+  replicas: 3
+
+
