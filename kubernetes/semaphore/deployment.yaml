@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: semaphore
+  name: semaphore
+spec:
+  selector:
+    matchLabels:
+      app: semaphore
+  template:
+    metadata:
+      labels:
+        app: semaphore
+    spec:
+      containers:
+      - name: semaphore
+        image: semaphoreui/semaphore:latest
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        restartPolicy: Always
+        envFrom:
+        - secretRef:
+            name: semaphore-secret
+        env:
+        - name: SEMAPHORE_DB
+          value: semaphore
+
+        - name: SEMAPHORE_DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: SEMAPHORE_DB_USER
+              optional: false
+
+        - name: SEMAPHORE_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              key: SEMAPHORE_DB_PASS
+              optional: false
+
+        - name: SEMAPHORE_DB_HOST
+          value: 192.168.1.47 # for postgres, change to: postgres
+
+        - name: SEMAPHORE_DB_PORT
+          value: "5432" # change to 5432 for postgres
+
+        - name: SEMAPHORE_DB_DIALECT
+          value: postgres # for postgres, change to: postgres
+
+        - name: SEMAPHORE_PLAYBOOK_PATH
+          value: /tmp/semaphore/
+          ### ERROR
+        - name: SEMAPHORE_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: SEMAPHORE_ADMIN_PASSWORD
+              optional: false
+
+        - name: SEMAPHORE_ADMIN_NAME
+          secretKeyRef:
+            name: semaphore-secret
+            key: SEMAPHORE_ADMIN_NAME
+            optional: false
+
+        - name: SEMAPHORE_ADMIN_EMAIL
+          value: admin@localhost
+
+          ### ERROR
+        - name: SEMAPHORE_ADMIN
+          secretKeyRef:
+            name: semaphore-secret
+            key: SEMAPHORE_ADMIN
+            optional: false
+
+
+
+        - name: SEMAPHORE_ACCESS_KEY_ENCRYPTION
+          value: BeKpJ+WBiWwkB1ySnohk4Yf7WD2uk+qByybv+wdNJhk=
+        ports:
+        - containerPort: 3000
