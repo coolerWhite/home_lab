@@ -1,4 +1,5 @@
 {
-    "editor.fontFamily": "Agave Nerd Font",
-    "terminal.integrated.fontFamily": "monospace"
+    "editor.fontFamily": "MesloLGS NF",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "terminal.integrated.fontWeightBold": "bold"
 }
