@@ -1,0 +1,86 @@
+# -e @inventory/homekube/homekube-variables.yaml
+
+# all.yml
+upstream_dns_servers:
+  - 8.8.8.8
+  - 8.8.4.4
+kube_read_only_port: 10255
+deploy_container_engine: true
+
+
+# addons.yml
+helm_enabled: true
+metrics_server_enabled: true
+metrics_server_container_port: 10250
+metrics_server_kubelet_insecure_tls: true
+metrics_server_metric_resolution: 15s
+metrics_server_kubelet_preferred_address_types: "InternalIP,ExternalIP,Hostname"
+metrics_server_host_network: false
+metrics_server_replicas: 1
+
+local_path_provisioner_enabled: true
+local_path_provisioner_namespace: "local-path-storage"
+local_path_provisioner_storage_class: "local-path"
+local_path_provisioner_reclaim_policy: Delete
+local_path_provisioner_claim_root: /opt/local-path-provisioner/
+local_path_provisioner_debug: true
+local_path_provisioner_image_repo: "rancher/local-path-provisioner"
+local_path_provisioner_image_tag: "v0.0.24"
+local_path_provisioner_helper_image_repo: "busybox"
+local_path_provisioner_helper_image_tag: "latest"
+
+cert_manager_enabled: true
+cert_manager_namespace: "cert-manager"
+cert_manager_tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    effect: NoSchedule
+# cert_manager_affinity:
+#  nodeAffinity:
+#    preferredDuringSchedulingIgnoredDuringExecution:
+#    - weight: 100
+#      preference:
+#        matchExpressions:
+#        - key: node-role.kubernetes.io/control-plane
+#          operator: In
+#          values:
+#          - ""
+
+cert_manager_nodeselector:
+  kubernetes.io/os: "linux"
+
+  # Kube VIP
+kube_vip_enabled: true
+kube_vip_arp_enabled: true
+kube_vip_controlplane_enabled: true
+kube_vip_address: 192.168.1.200
+loadbalancer_apiserver:
+  address: "{{ kube_vip_address }}"
+  port: 6443
+kube_vip_interface: eth0
+kube_vip_services_enabled: true
+
+# k8s-cluster.yml
+kube_version: v1.27.8
+kube_proxy_strict_arp: true
+container_manager: docker
+kubeconfig_localhost: true
+kubeconfig_localhost_ansible_host: true
+kubectl_localhost: true
+auto_renew_certificates: true
+auto_renew_certificates_systemd_calendar: "Mon *-*-1,2,3,4,5,6,7 03:{{ groups['kube_control_plane'].index(inventory_hostname) }}0:00"
+
+kubeadm_patches:
+  enabled: true
+  source_dir: "{{ inventory_dir }}/patches"
+  dest_dir: "{{ kube_config_dir }}/patches"
+
+# docker.yml
+docker_storage_options: -s overlay2
+
+# k8s-net-calico.yml
+calico_ipam_host_local: true
+
+# etcd.yml
+# etcd_compaction_retention: 0
+etcd_metrics: basic
+etcd_memory_limit: "0"
