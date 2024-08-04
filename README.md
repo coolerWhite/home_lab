@@ -1,7 +1,5 @@
 # home_lab
-репозиторий моего полигона
-    - установить и настройить zsh
-    - настроить zsh VSCode https://dev.to/ramazanatalay/how-to-fix-oh-my-zsh-icons-in-visual-studio-code-terminal-in-macos-1ehl
+Cookbook for you Lab. Get expirence and prictise
 
 # Terraform
 Для установки плагина proxmox из исходника:
