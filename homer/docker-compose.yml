@@ -4,12 +4,12 @@ services:
     # To build from source, replace 'image: lissy93/dashy' with 'build: .'
     # build: .
     image: lissy93/dashy
-    container_name: Dashy
+    # container_name: dashy
     # Pass in your config file below, by specifying the path on your host machine
     # volumes:
     # - /root/my-config.yml:/app/public/conf.yml
     ports:
-    - 4000:80
+    - :80
     # Set any environmental variables
     environment:
     - NODE_ENV=production
@@ -25,3 +25,10 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - default_net
+
+networks:
+  default_net:
+    external:
+      true

@@ -1,0 +1,17 @@
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://pass.coolwhite.tech"
+    volumes:
+      - ./vw-data/:/data/
+    ports:
+      - 80
+    networks:
+      - default_net
+
+networks:
+  default_net:
+    external: true

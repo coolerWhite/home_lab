@@ -2,3 +2,23 @@
 terraform.tfstate
 .terraform.lock.hcl
 .terraform
+terraform.tfvars
+prox
+certs
+
+# Folders
+ansible
+bash/*
+certificates
+config
+*/*data*
+proxmox
+
+# Keys
+*.pem
+
+# Configs
+nginx.conf
+
+# ENV
+*.env

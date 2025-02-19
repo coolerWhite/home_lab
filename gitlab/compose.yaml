@@ -1,0 +1,26 @@
+services:
+  gitlab:
+    container_name: gitlab
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    # hostname: "gitlab"
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        # external_url 'http://gitlab.coolwhite.tech'
+        # external_url 'http://192.168.1.141'
+        # gitlab_rails['gitlab_shell_ssh_port'] = 2222
+    ports:
+      - 80
+      # - 443
+      # - '22:22'
+    volumes:
+      - './gitlab/config:/etc/gitlab'
+      - './gitlab/logs:/var/log/gitlab'
+      - './gitlab/data:/var/opt/gitlab'
+    # shm_size: '256m'
+    networks:
+      - default_net
+networks:
+  default_net:
+    external: true

@@ -1,5 +1,6 @@
 {
     "editor.fontFamily": "MesloLGS NF",
     "terminal.integrated.fontFamily": "MesloLGS NF",
-    "terminal.integrated.fontWeightBold": "bold"
+    "terminal.integrated.fontWeightBold": "bold",
+    "ansible.python.interpreterPath": "/usr/bin/python3"
 }

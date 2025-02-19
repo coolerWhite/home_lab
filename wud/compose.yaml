@@ -1,0 +1,15 @@
+services:
+  whatsupdocker:
+    container_name: whatsupdocker
+    image: getwud/wud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    ports:
+      - 3000
+    networks:
+      - default_net
+
+networks:
+  default_net:
+    external: true

@@ -1,0 +1,19 @@
+services:
+  myspeed:
+    # build: . # uncomment this line to build from source
+    container_name: myspeed
+    image: germannewsmaker/myspeed:latest # comment this line to build from source
+    restart: unless-stopped
+    ports:
+      - 5216
+    volumes:
+      - myspeed:/myspeed/data
+    networks:
+      - default_net
+
+networks:
+  default_net:
+    external: true
+
+volumes:
+  myspeed: {}

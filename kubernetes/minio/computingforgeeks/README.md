@@ -1,1 +1,0 @@
-https://computingforgeeks.com/deploy-and-manage-minio-storage-on-kubernetes/

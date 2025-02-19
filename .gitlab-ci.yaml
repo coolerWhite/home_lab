@@ -1,0 +1,39 @@
+stages:
+  - depends
+  - linting
+  - test
+  - build
+  - deploy
+
+install-depends:
+  stage: depends
+  image: node:22.10.0-alpine3.20
+  script:
+    - npm install
+
+linting:
+  stage: linting
+  script:
+    - npm install -g eslint
+    - eslint --init
+    - eslint <your_js_file>
+
+test:
+  stage: test
+  script:
+    - npm run test
+
+build-image:
+  stage: build
+  image: docker:24.0.5
+  script:
+    - docker build . -t NAME_APP
+  tags:
+    - docker
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - docker run NAME_APP -d

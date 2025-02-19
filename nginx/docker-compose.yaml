@@ -1,0 +1,23 @@
+services:
+  nginx:
+    image: nginx
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+          cpus: '1'
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+      - /etc/letsencrypt/live/coolwhite.tech-0001/fullchain.pem:/certs/coolwhite.tech.pem:ro
+      - /etc/letsencrypt/live/coolwhite.tech-0001/privkey.pem:/certs/coolwhite.tech-key.pem:ro
+    networks:
+      - default_net
+networks:
+  default_net:
+    external: true
