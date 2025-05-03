@@ -10,10 +10,13 @@ certs
 ansible
 bash/*
 certificates
+letsencrypt
 config
 */*data*
 proxmox
-
+affine/self-host
+gitea/gitea
+docs
 # Keys
 *.pem
 
